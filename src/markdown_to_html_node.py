@@ -1,3 +1,5 @@
+import re
+
 from block_to_block_type import block_to_block_type, BlockType
 from markdown_to_blocks import markdown_to_blocks
 from text_node_to_leaf_node import text_node_to_leaf_node
@@ -43,15 +45,19 @@ def clean_text(block, block_type):
             list_items = []
             lines = block.split("\n")
             for line in lines:
-                stripped = line.lstrip("- ")
-                list_items.append(stripped)
+                m = re.match(r"^\s*[-*+]\s+(.*)$", line)
+                if m:
+                    stripped = m.group(1)
+                    list_items.append(stripped)
             return "\n".join(list_items)
         case BlockType.ORDERED_LIST:
             list_items = []
             lines = block.split("\n")
             for line in lines:
-                stripped = line.lstrip("123456789. ")
-                list_items.append(stripped)
+                m = re.match(r"^\s*(\d+)\.\s+(.*)$", line)
+                if m:
+                    stripped = m.group(2)
+                    list_items.append(stripped)
             return "\n".join(list_items)
         case _:
             raise TypeError("error: not a valid BlockType")
@@ -60,7 +66,7 @@ def strip_lines(text):
     lines = text.split("\n")
     stripped_list = []
     for line in lines:
-        stripped = line.strip()
+        stripped = line.strip().lstrip("- >")
         if stripped:
             stripped_list.append(stripped)
     return " ".join(stripped_list)
@@ -81,13 +87,17 @@ def block_to_html_node(block, block_type):
             list_items = []
             lines = block.split("\n")
             for line in lines:
-                list_items.append(ParentNode("li", []))
+                stripped_line = strip_lines(line)
+                line_nodes = text_to_children(stripped_line)
+                list_items.append(ParentNode("li", line_nodes))
             return ParentNode("ul", list_items)
         case BlockType.ORDERED_LIST:
             list_items = []
             lines = block.split("\n")
             for line in lines:
-                list_items.append(ParentNode("li", []))
+                stripped_line = strip_lines(line)
+                line_nodes = text_to_children(stripped_line)
+                list_items.append(ParentNode("li", line_nodes))
             return ParentNode("ol", list_items)
         case _:
             raise TypeError("error: not a valid BlockType")
