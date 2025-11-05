@@ -1,10 +1,7 @@
-from textnode import TextNode, TextType
+from update_public import update_public
 
 
 def main():
-    test = TextNode("sample text", TextType.IMAGE, "www.shingledingleongomous.org")
-    print(test)
-    print(123)
-
+    update_public()
 
 main()
