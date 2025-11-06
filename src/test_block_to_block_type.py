@@ -55,6 +55,14 @@ With multiple lines.
         block_type = block_to_block_type(md)
         self.assertEqual(block_type, BlockType.QUOTE)
 
+    def test_quote_blank_middle(self):
+        md = '''> This is a quote block.
+>
+> -- Big Albert
+'''
+        block_type = block_to_block_type(md)
+        self.assertEqual(block_type, BlockType.QUOTE)
+
     def test_quote_multiline_no_space(self):
         md = '''>This is a quote block.
 >With a second line.'''
