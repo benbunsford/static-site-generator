@@ -11,15 +11,11 @@ def update_public():
                 os.mkdir(destination_path)
                 copy_tree(source_path, destination_path)
             else:
-                print(item)
                 shutil.copy(source_path, destination_path)
 
     cwd = os.getcwd()
     source_dir = os.path.join(cwd, "static")
     destination_dir = os.path.join(cwd, "public")
-    print(cwd)
-    print(source_dir)
-    print(destination_dir)
     if os.path.exists(destination_dir):
         shutil.rmtree(destination_dir)
     os.mkdir(destination_dir)

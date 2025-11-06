@@ -21,7 +21,7 @@ def block_to_block_type(markdown_block):
     lines = stripped_md_block.split("\n")
 
     for i in range(len(lines)):
-        if not re.match(r"^> .*$", lines[i]):
+        if not re.match(r"^>(?: .+|)$", lines[i]):
             break
         if i == len(lines)-1:
             return BlockType.QUOTE
