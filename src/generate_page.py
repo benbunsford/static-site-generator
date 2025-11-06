@@ -24,14 +24,18 @@ def generate_page(from_path, template_path, dest_path):
 def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
     content_items = os.listdir(dir_path_content)
     for item in content_items:
-        if os.path.isdir(item):
+        content_path = os.path.join(dir_path_content, item)
+        dest_path = os.path.join(dest_dir_path, item.replace(".md", ".html"))
+        if os.path.isdir(content_path):
             generate_pages_recursive(
-                os.path.join(dir_path_content, item),
+                content_path,
                 template_path,
-                os.path.join(dest_dir_path, item)
+                dest_path
             )
         elif (
-            os.path.isfile(item) and
-            re.match(r"\.md$", item)
+            os.path.isfile(content_path) and
+            re.search(r"\.md$", content_path)
         ):
-            generate_page(dir_path_content, template_path, dest_dir_path)
+            generate_page(content_path, template_path, dest_path)
+        else:
+            print(content_path, os.path.isfile(content_path), re.search(r"\.md$", content_path))
