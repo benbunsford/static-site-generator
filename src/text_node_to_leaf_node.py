@@ -12,12 +12,8 @@ def text_node_to_leaf_node(text_node):
         case TextType.CODE:
             return LeafNode("code", text_node.text)
         case TextType.LINK:
-            if not text_node.url.startswith("/"):
-                text_node.url = "/" + text_node.url
             return LeafNode("a", text_node.text, {"href": text_node.url})
         case TextType.IMAGE:
-            if not text_node.url.startswith("/"):
-                text_node.url = "/" + text_node.url
             return LeafNode("img", "", {"src": text_node.url, "alt": text_node.text})
         case _:
             raise ValueError("error: unknown TextType")
