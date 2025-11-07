@@ -1,7 +1,6 @@
 import re
 
 from block_to_block_type import block_to_block_type, BlockType
-from leafnode import LeafNode
 from markdown_to_blocks import markdown_to_blocks
 from text_node_to_leaf_node import text_node_to_leaf_node
 from text_to_textnodes import text_to_textnodes
