@@ -19,6 +19,7 @@ def generate_page(from_path, template_path, dest_path, basepath):
     updated_img_path = updated_link_path.replace('src="/', f'src="{basepath}')
     parent_dir = os.path.dirname(dest_path)
     os.makedirs(parent_dir, exist_ok=True)
+    print(dest_path, parent_dir)
     with open(dest_path, "w") as d:
         d.write(updated_img_path)
 

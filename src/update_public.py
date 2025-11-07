@@ -13,9 +13,8 @@ def update_public():
             else:
                 shutil.copy(source_path, destination_path)
 
-    cwd = os.getcwd()
-    source_dir = os.path.join(cwd, "static")
-    destination_dir = os.path.join(cwd, "public")
+    source_dir = "static"
+    destination_dir = "docs"
     if os.path.exists(destination_dir):
         shutil.rmtree(destination_dir)
     os.mkdir(destination_dir)
